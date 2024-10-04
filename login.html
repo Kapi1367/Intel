@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page with Gradient and Google Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #000000, #1A73E8); /* Black to blue gradient */
+    }
+
+    .box-form {
+      display: flex;
+      width: 70%;
+      height: 500px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .box-form .left {
+      width: 50%;
+      background: url('https://path-to-your-image.com') no-repeat center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .box-form .left .overlay {
+      background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgba(0, 0, 255, 0.6)); /* Blend with gradient */
+      color: #fff;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .box-form .left h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .box-form .left p {
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .box-form .left span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .box-form .left span p {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .box-form .left span a {
+      display: inline-block;
+      margin: 5px 0;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      background-color: #4285F4; /* Google Blue */
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .box-form .left span a i {
+      margin-right: 10px;
+    }
+
+    .box-form .right {
+      width: 50%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .box-form .right h5 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .box-form .right p {
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .box-form .right .inputs {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .box-form .right .inputs input {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .box-form .right .remember-me--forget-password {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .box-form .right button {
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #1A73E8;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .box-form .right button:hover {
+      background-color: #155BBB;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box-form">
+  <div class="left">
+    <div class="overlay">
+      <h1>Hello There!</h1>
+      <p>Ready to get that Academic Comeback you always desired?
+        Join us now!
+      </p>
+      <span>
+        <p>Login with social media</p>
+        <!-- Google Login -->
+        <a href="#"><i class="fa fa-google" aria-hidden="true"></i> Login with Google</a>
+      </span>
+    </div>
+  </div>
+
+  <div class="right">
+    <h5>Login</h5>
+    <p>Don't have an account? <a href="#">Create Your Account</a> it takes less than a minute</p>
+    <div class="inputs">
+      <input type="text" placeholder="user name">
+      <input type="password" placeholder="password">
+    </div>
+    
+    <div class="remember-me--forget-password">
+      <label>
+        <input type="checkbox" name="item" checked/>
+        <span class="text-checkbox">Remember me</span>
+      </label>
+      <p>forget password?</p>
+    </div>
+    
+    <button>Login</button>
+  </div>
+</div>
+
+</body>
+</html>

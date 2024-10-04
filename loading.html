@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000; /* Black background */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        #loading-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        video {
+            max-width: 90%;  /* Further increased video frame size */
+            height: 550px;   /* Increased height for the video */
+            border-radius: 10px;
+            background-color: #0077B6;
+            margin-bottom: 25px; /* Adjusted space below the video */
+        }
+
+        #loading-text {
+            font-size: 40px; /* Increased size of the cute line */
+            margin-top: 20px; /* Adjusted margin spacing */
+            color: #CAF0F8; /* Bright color for better visibility */
+            font-weight: bold;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 90%; /* Adjusted width to match the larger video frame */
+            height: 20px; /* Increased progress bar height */
+            background-color: #000000; /* Black background for the progress bar */
+            border-radius: 10px;
+            margin: 20px auto; /* Adjusted spacing for progress bar */
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-image: linear-gradient(90deg, #03045E, #0077B6, #00B4D8, #90E0EF, #CAF0F8); /* Gradient with the given color codes */
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="loading-container">
+        <!-- Dinosaur running video -->
+        <video id="dino-video" autoplay loop muted>
+            <source src="/shre0000-0160.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Cute productivity line -->
+        <div id="loading-text">
+            "Just a moment while we get your notes ready—dinos work fast too!"
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate loading progress
+        let progress = 0;
+        const progressBar = document.getElementById('progress-bar');
+
+        function updateProgress() {
+            progress += 1; // Increment progress
+            progressBar.style.width = progress + '%'; // Update the width of the progress bar
+            
+            if (progress >= 100) {
+                clearInterval(progressInterval); // Stop the interval when progress reaches 100%
+            }
+        }
+
+        // Update the progress bar every 50ms (filling in 5 seconds)
+        const progressInterval = setInterval(updateProgress, 50);
+    </script>
+</body>
+</html>
