@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: #000000;
+            color: #E0E0E0;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #1A1A1A;
+        }
+
+        .logo {
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        nav {
+            position: relative;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #F8F9FA;
+            font-size: 1.1rem;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #48CAE4;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #48CAE4;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            height: auto;
+            background-color: #1A1A1A;
+            min-height: calc(100vh - 100px); /* Ensures enough space before the footer */
+        }
+
+        /* To-do Container */
+        .todo-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .todo-container h2 {
+            color: #000000;
+            text-align: center;
+        }
+
+        .todo-list {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+
+        .todo-list li {
+            background: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #000000;
+        }
+
+        .todo-list li.done {
+            text-decoration: line-through;
+            background-color: #c8e6c9;
+        }
+
+        .todo-list .close {
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #ff1744;
+        }
+
+        .todo-list .checkbox-mask {
+            cursor: pointer;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border: 2px solid #999;
+            border-radius: 2px;
+            margin-right: 10px;
+        }
+
+        .todo-list .checkbox-mask.checked {
+            background-color: #48CAE4;
+        }
+
+        .add-control {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .add-control input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .add-control button {
+            padding: 10px 20px;
+            background-color: #48CAE4;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px 50px;
+            background-color: #1A1A1A;
+            text-align: center;
+            color: #CCCCCC;
+            margin-top: auto;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #90E0EF;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #00B4D8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">Note IT</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Streak</a></li>
+                <li><a href="#">To-do</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="todo-container">
+            <h2>Your To-do List</h2>
+            <ul class="todo-list"></ul>
+            <div class="add-control">
+                <input type="text" class="form-control" placeholder="✍ Add item...">
+                <button class="add-btn">Add</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 NoteIT. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            // Load saved state from localStorage
+            function getState() {
+                return JSON.parse(localStorage.getItem("state")) || {};
+            }
+
+            // Save the state to localStorage
+            function syncState(state) {
+                localStorage.setItem("state", JSON.stringify(state));
+            }
+
+            // Add new task
+            function addItem(text, status, id, noUpdate) {
+                var id = id || Date.now();
+                var statusClass = status === "done" ? "done" : "";
+                var item = `
+                    <li class="${statusClass}" data-id="${id}">
+                        <label>
+                            <span class="checkbox-mask ${statusClass}"></span>
+                            ${text}
+                        </label>
+                        <span class="close">✖</span>
+                    </li>`;
+                $(".todo-list").append(item);
+
+                if (!noUpdate) {
+                    var state = getState();
+                    state[id] = { text: text, status: "new" };
+                    syncState(state);
+                }
+            }
+
+            // Load items on page load
+            var state = getState();
+            $.each(state, function (id, item) {
+                addItem(item.text, item.status, id, true);
+            });
+
+            // Add task on button click
+            $(".add-btn").on("click", function () {
+                var itemVal = $(".form-control").val();
+                if (itemVal) {
+                    addItem(itemVal);
+                    $(".form-control").val("");
+                }
+            });
+
+            // Mark task as done or undone
+            $(".todo-list").on("click", ".checkbox-mask", function () {
+                var li = $(this).closest("li");
+                var id = li.data("id");
+                li.toggleClass("done");
+                $(this).toggleClass("checked");
+
+                var state = getState();
+                state[id].status = li.hasClass("done") ? "done" : "new";
+                syncState(state);
+            });
+
+            // Remove task
+            $(".todo-list").on("click", ".close", function () {
+                var li = $(this).closest("li");
+                var id = li.data("id");
+                li.remove();
+
+                var state = getState();
+                delete state[id];
+                syncState(state);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
