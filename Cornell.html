@@ -329,6 +329,7 @@
                 <div class="cornell-notes-section">
                     <h3>Keywords</h3>
                     <textarea placeholder="Main ideas, questions, keywords..."></textarea>
+
                 </div>
                 <!-- Notes Column -->
                 <div class="cornell-notes-section">
@@ -339,7 +340,7 @@
             <!-- Summary Section -->
             <div class="cornell-summary">
                 <h3>Summary</h3>
-                <textarea placeholder="Summary of key points..."></textarea>
+                <textarea id="summarizedText" placeholder="Main ideas, questions, keywords..." rows="10" cols="50">{{ summarized_text }}</textarea>
             </div>
 
             <!-- Save Button -->
@@ -393,6 +394,29 @@
         saveButton.addEventListener('click', () => {
             alert(`Notes saved!`);
         });
+        async function fetchSummarizedText() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/summarize');  // Fetch summarized text
+                if (!response.ok) {
+                    throw new Error('Failed to fetch summarized text');
+                }
+
+                const data = await response.json();
+                if (data.summarized_text) {
+                    document.getElementById('summarizedText').value = data.summarized_text;  // Display in textarea
+                } else {
+                    alert('Summarization failed or no text was saved.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while fetching the summarized text.');
+            }
+        }
+
+        // Automatically fetch and display summarized text when the page loads
+        window.onload = function() {
+            fetchSummarizedText();  // Fetch the summarized text as soon as the page loads
+        }
     </script>
 </body>
 

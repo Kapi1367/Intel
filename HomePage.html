@@ -1,750 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NoteIT</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note IT</title>
     <!-- Google Fonts: Lora -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&display=swap" rel="stylesheet">
     <style>
-      /* General reset */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Lora", serif;
-        background-color: #000000;
-        color: #e0e0e0;
-      }
-
-      /* Header */
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 50px;
-        background-color: #1a1a1a;
-      }
-
-      .logo {
-        font-size: 2rem;
-        color: #ffffff;
-        font-weight: 600;
-      }
-
-      nav {
-        position: relative;
-      }
-
-      nav ul {
-        list-style: none;
-        display: flex;
-        gap: 25px;
-      }
-
-      nav ul li a {
-        text-decoration: none;
-        color: #f8f9fa;
-        font-size: 1.1rem;
-        padding: 10px 0;
-        position: relative;
-        transition: color 0.3s ease;
-      }
-
-      nav ul li a::after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 2px;
-        background-color: #48cae4;
-        bottom: 0;
-        left: 0;
-        transition: width 0.3s ease;
-      }
-
-      nav ul li a:hover {
-        color: #48cae4;
-      }
-
-      nav ul li a:hover::after {
-        width: 100%;
-      }
-
-      /* Hero Section */
-      .hero {
-        height: 80vh; /* Increased height for more space */
-        display: flex;
-        background-color: #1a1a1a;
-        border-bottom: 2px solid #0096c7;
-      }
-
-      .hero-left {
-        width: 30%;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        color: #f8f9fa;
-        text-align: center;
-      }
-
-      /* Adjustments to position the "ADD FILE" higher */
-      .top-section {
-        margin-bottom: 10px; /* Reduced margin */
-        padding-top: 0; /* Removed padding to bring it up */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
-
-      /* Increased the size of the "My Courses" box */
-      .middle-section {
-        background-color: #2c2c2c;
-        padding: 10px;
-        border-radius: 8px;
-        overflow-y: auto;
-        max-height: 400px; /* Increased max height for larger box */
-        margin-bottom: 20px;
-        text-align: left;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      }
-
-      /* Updated settings button with rotating plus sign */
-      .settings-button {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
-
-      .settings-text {
-        font-size: 1.1rem;
-        color: #f8f9fa;
-        transition: color 0.3s ease;
-      }
-
-      .svg-icon {
-        width: 50px;
-        height: 50px;
-        stroke: #94a3b8;
-        fill: none;
-        transition: stroke 0.3s ease;
-      }
-
-      .settings-button:hover .svg-icon {
-        stroke: #48cae4; /* Change color on hover */
-      }
-
-      .settings-button:hover .settings-text {
-        color: #48cae4; /* Change text color on hover */
-      }
-
-      .svg-icon path.plus {
-        transform: rotate(0deg);
-        transition: transform 0.3s ease;
-        transform-origin: center;
-      }
-
-      .settings-button:hover .svg-icon path.plus {
-        transform: rotate(90deg); /* Rotate the plus on hover */
-      }
-
-      .courses-title {
-        font-size: 1.6rem; /* Increased font size */
-        margin-bottom: 15px; /* More space below title */
-        font-weight: bold; /* Make title bold */
-        color: #0096c7; /* Added color to the title */
-      }
-
-      .course-item {
-        padding: 12px; /* Increased padding for better spacing */
-        border-bottom: 1px solid #555555;
-        display: flex;
-        justify-content: space-between; /* Space out items */
-        align-items: center; /* Center items vertically */
-        transition: background-color 0.3s ease; /* Transition for hover effect */
-        cursor: pointer; /* Change cursor to pointer */
-        border-radius: 4px; /* Added border radius for item */
-      }
-
-      .course-item:last-child {
-        border-bottom: none;
-      }
-
-      /* Hover effect for course items */
-      .course-item:hover {
-        background-color: #656464; /* Change background color on hover */
-        transform: scale(1.02); /* Slight scaling effect on hover */
-      }
-
-      /* Selected course item */
-      .course-item.selected {
-        background-color: #444444; /* Change to a different color when selected */
-        color: #ffffff; /* Change text color for selected item */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow effect for selected item */
-      }
-
-      .bottom-section {
-        background-color: #333333;
-        padding: 15px;
-        border-radius: 5px;
-        height: 200px;
-      }
-
-      .streak-title {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-      }
-
-      .hero-content h1 {
-        font-size: 3.2rem;
-        color: #f8f9fa;
-        margin-bottom: 20px;
-      }
-
-      .hero-content p {
-        font-size: 1.3rem;
-        margin-bottom: 30px;
-      }
-
-      .hero-content button {
-        padding: 10px 25px;
-        background-color: #333333;
-        border: none;
-        color: #ffffff;
-        font-size: 1.1rem;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-      }
-
-      .hero-content button:hover {
-        background-color: #555555;
-      }
-
-      footer {
-        padding: 30px 50px;
-        background-color: #1a1a1a;
-        text-align: center;
-        color: #cccccc;
-      }
-
-      footer p {
-        font-size: 0.9rem;
-      }
-
-      footer a {
-        color: #90e0ef;
-        text-decoration: none;
-      }
-
-      footer a:hover {
-        color: #00b4d8;
-      }
-
-      .wheel-and-hamster {
-        --dur: 1s;
-        position: absolute;
-        right: 25%; /* Align to the right */
-        top: 50%; /* Vertically center */
-        transform: translateY(
-          -50%
-        ); /* Adjust position to perfectly center vertically */
-        width: 12em; /* Increase size from 12em to 18em */
-        height: 12em; /* Increase size from 12em to 18em */
-        font-size: 24px; /* Increase font size to match new scale */
-      }
-
-      .wheel,
-      .hamster,
-      .hamster div,
-      .spoke {
-        position: absolute;
-      }
-
-      .wheel,
-      .spoke {
-        border-radius: 50%;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      .wheel {
-        background: radial-gradient(
-          100% 100% at center,
-          hsla(0, 0%, 60%, 0) 47.8%,
-          hsl(0, 0%, 60%) 48%
-        );
-        z-index: 2;
-      }
-
-      .hamster {
-        animation: hamster var(--dur) ease-in-out infinite;
-        top: 50%;
-        left: calc(50% - 3.5em);
-        width: 7em;
-        height: 3.75em;
-        transform: rotate(4deg) translate(-0.8em, 1.85em);
-        transform-origin: 50% 0;
-        z-index: 1;
-      }
-
-      .hamster__head {
-        animation: hamsterHead var(--dur) ease-in-out infinite;
-        background: hsl(30, 90%, 55%);
-        border-radius: 70% 30% 0 100% / 40% 25% 25% 60%;
-        box-shadow: 0 -0.25em 0 hsl(30, 90%, 80%) inset,
-          0.75em -1.55em 0 hsl(30, 90%, 90%) inset;
-        top: 0;
-        left: -2em;
-        width: 2.75em;
-        height: 2.5em;
-        transform-origin: 100% 50%;
-      }
-
-      .hamster__ear {
-        animation: hamsterEar var(--dur) ease-in-out infinite;
-        background: hsl(0, 90%, 85%);
-        border-radius: 50%;
-        box-shadow: -0.25em 0 hsl(30, 90%, 55%) inset;
-        top: -0.25em;
-        right: -0.25em;
-        width: 0.75em;
-        height: 0.75em;
-        transform-origin: 50% 75%;
-      }
-
-      .hamster__eye {
-        animation: hamsterEye var(--dur) linear infinite;
-        background-color: hsl(0, 0%, 0%);
-        border-radius: 50%;
-        top: 0.375em;
-        left: 1.25em;
-        width: 0.5em;
-        height: 0.5em;
-      }
-
-      .hamster__nose {
-        background: hsl(0, 90%, 75%);
-        border-radius: 35% 65% 85% 15% / 70% 50% 50% 30%;
-        top: 0.75em;
-        left: 0;
-        width: 0.2em;
-        height: 0.25em;
-      }
-
-      .hamster__body {
-        animation: hamsterBody var(--dur) ease-in-out infinite;
-        background: hsl(30, 90%, 90%);
-        border-radius: 50% 30% 50% 30% / 15% 60% 40% 40%;
-        box-shadow: 0.1em 0.75em 0 hsl(30, 90%, 55%) inset,
-          0.15em -0.5em 0 hsl(30, 90%, 80%) inset;
-        top: 0.25em;
-        left: 2em;
-        width: 4.5em;
-        height: 3em;
-        transform-origin: 17% 50%;
-        transform-style: preserve-3d;
-      }
-
-      .hamster__limb--fr,
-      .hamster__limb--fl {
-        clip-path: polygon(0 0, 100% 0, 70% 80%, 60% 100%, 0% 100%, 40% 80%);
-        top: 2em;
-        left: 0.5em;
-        width: 1em;
-        height: 1.5em;
-        transform-origin: 50% 0;
-      }
-
-      .hamster__limb--fr {
-        animation: hamsterFRLimb var(--dur) linear infinite;
-        background: linear-gradient(
-          hsl(30, 90%, 80%) 80%,
-          hsl(0, 90%, 75%) 80%
-        );
-        transform: rotate(15deg) translateZ(-1px);
-      }
-
-      .hamster__limb--fl {
-        animation: hamsterFLLimb var(--dur) linear infinite;
-        background: linear-gradient(
-          hsl(30, 90%, 90%) 80%,
-          hsl(0, 90%, 85%) 80%
-        );
-        transform: rotate(15deg);
-      }
-
-      .hamster__limb--br,
-      .hamster__limb--bl {
-        border-radius: 0.75em 0.75em 0 0;
-        clip-path: polygon(
-          0 0,
-          100% 0,
-          100% 30%,
-          70% 90%,
-          70% 100%,
-          30% 100%,
-          40% 90%,
-          0% 30%
-        );
-        top: 1em;
-        left: 2.8em;
-        width: 1.5em;
-        height: 2.5em;
-        transform-origin: 50% 30%;
-      }
-
-      .hamster__limb--br {
-        animation: hamsterBRLimb var(--dur) linear infinite;
-        background: linear-gradient(
-          hsl(30, 90%, 80%) 90%,
-          hsl(0, 90%, 75%) 90%
-        );
-        transform: rotate(-25deg) translateZ(-1px);
-      }
-
-      .hamster__limb--bl {
-        animation: hamsterBLLimb var(--dur) linear infinite;
-        background: linear-gradient(
-          hsl(30, 90%, 90%) 90%,
-          hsl(0, 90%, 85%) 90%
-        );
-        transform: rotate(-25deg);
-      }
-
-      .hamster__tail {
-        animation: hamsterTail var(--dur) linear infinite;
-        background: hsl(0, 90%, 85%);
-        border-radius: 0.25em 50% 50% 0.25em;
-        box-shadow: 0 -0.2em 0 hsl(0, 90%, 75%) inset;
-        top: 1.5em;
-        right: -0.5em;
-        width: 1em;
-        height: 0.5em;
-        transform: rotate(30deg) translateZ(-1px);
-        transform-origin: 0.25em 0.25em;
-      }
-
-      .spoke {
-        animation: spoke var(--dur) linear infinite;
-        background: radial-gradient(
-            100% 100% at center,
-            hsl(0, 0%, 60%) 4.8%,
-            hsla(0, 0%, 60%, 0) 5%
-          ),
-          linear-gradient(
-              hsla(0, 0%, 55%, 0) 46.9%,
-              hsl(0, 0%, 65%) 47% 52.9%,
-              hsla(0, 0%, 65%, 0) 53%
-            )
-            50% 50% / 99% 99% no-repeat;
-      }
-
-      /* Animations */
-      @keyframes hamster {
-        from,
-        to {
-          transform: rotate(4deg) translate(-0.8em, 1.85em);
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        50% {
-          transform: rotate(0) translate(-0.8em, 1.85em);
-        }
-      }
-
-      @keyframes hamsterHead {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(0);
+        body {
+            font-family: 'Lora', serif;
+            background-color: #000000;
+            color: #E0E0E0;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(8deg);
-        }
-      }
-
-      @keyframes hamsterEye {
-        from,
-        90%,
-        to {
-          transform: scaleY(1);
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #1A1A1A;
         }
 
-        95% {
-          transform: scaleY(0);
-        }
-      }
-
-      @keyframes hamsterEar {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(0);
+        .logo {
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: 600;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(12deg);
-        }
-      }
-
-      @keyframes hamsterBody {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(0);
+        nav {
+            position: relative;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(-2deg);
-        }
-      }
-
-      @keyframes hamsterFRLimb {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(50deg) translateZ(-1px);
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(-30deg) translateZ(-1px);
-        }
-      }
-
-      @keyframes hamsterFLLimb {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(-30deg);
+        nav ul li a {
+            text-decoration: none;
+            color: #F8F9FA;
+            font-size: 1.1rem;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.3s ease;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(50deg);
-        }
-      }
-
-      @keyframes hamsterBRLimb {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(-60deg) translateZ(-1px);
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #48CAE4;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(20deg) translateZ(-1px);
-        }
-      }
-
-      @keyframes hamsterBLLimb {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(20deg);
+        nav ul li a:hover {
+            color: #48CAE4;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(-60deg);
-        }
-      }
-
-      @keyframes hamsterTail {
-        from,
-        25%,
-        50%,
-        75%,
-        to {
-          transform: rotate(30deg) translateZ(-1px);
+        nav ul li a:hover::after {
+            width: 100%;
         }
 
-        12.5%,
-        37.5%,
-        62.5%,
-        87.5% {
-          transform: rotate(10deg) translateZ(-1px);
-        }
-      }
-
-      @keyframes spoke {
-        from {
-          transform: rotate(0);
+        /* Hero Section */
+        .hero {
+            height: 80vh; /* Increased height for more space */
+            display: flex;
+            background-color: #1A1A1A;
+            border-bottom: 2px solid #0096C7;
         }
 
-        to {
-          transform: rotate(-1turn);
+        .hero-left {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            color: #F8F9FA;
+            text-align: center;
         }
-      }
 
-      /* Text box style */
-      .text-box {
-        display: none; /* Hidden by default */
-        width: 700px; /* Width can be adjusted */
-        height: 450px;
-        padding: 10px;
-        font-size: 1rem;
-        background-color: rgba(
-          51,
-          51,
-          51,
-          0.5
-        ); /* Semi-transparent background (50% opacity) */
-        color: #d0cece;
-        backdrop-filter: blur(200px); /* Blur effect */
-        border-radius: 15px; /* Rounded corners */
-        resize: none; /* Prevent resizing */
-      }
+        /* Adjustments to position the "ADD FILE" higher */
+        .top-section {
+            margin-bottom: 10px; /* Reduced margin */
+            padding-top: 0; /* Removed padding to bring it up */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
 
-      /* Save Button Style */
-      button {
-        font-family: inherit;
-        font-size: 20px;
-        background: #212121;
-        color: white;
-        fill: rgb(155, 153, 153);
-        padding: 0.7em 1em;
-        padding-left: 0.9em;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        border: none;
-        border-radius: 15px;
-        font-weight: 1000;
-        margin-top: 15px; /* Space above the button */
-        display: none; /* Initially hidden */
-      }
+        /* Increased the size of the "My Courses" box */
+        .middle-section {
+            background-color: #2C2C2C;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 400px; /* Increased max height for larger box */
+            margin-bottom: 20px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
 
-      button span {
-        display: block;
-        margin-left: 0.3em;
-        transition: all 0.3s ease-in-out;
-      }
+        /* Updated settings button with rotating plus sign */
+        .settings-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
 
-      button svg {
-        display: block;
-        transform-origin: center center;
-        transition: transform 0.3s ease-in-out;
-      }
+        .settings-text {
+            font-size: 1.1rem;
+            color: #F8F9FA;
+            transition: color 0.3s ease;
+        }
 
-      button:hover {
-        background: #212121;
-      }
+        .svg-icon {
+            width: 50px;
+            height: 50px;
+            stroke: #94A3B8;
+            fill: none;
+            transition: stroke 0.3s ease;
+        }
 
-      button:hover .svg-wrapper {
-        transform: scale(1.25);
-        transition: 0.5s linear;
-      }
+        .settings-button:hover .svg-icon {
+            stroke: #48CAE4; /* Change color on hover */
+        }
 
-      button:hover svg {
-        transform: translateX(1.2em) scale(1.1);
-        fill: #fff;
-      }
+        .settings-button:hover .settings-text {
+            color: #48CAE4; /* Change text color on hover */
+        }
 
-      button:hover span {
-        opacity: 0;
-        transition: 0.5s linear;
-      }
+        .svg-icon path.plus {
+            transform: rotate(0deg);
+            transition: transform 0.3s ease;
+            transform-origin: center;
+        }
 
-      button:active {
-        transform: scale(0.95);
-      }
+        .settings-button:hover .svg-icon path.plus {
+            transform: rotate(90deg); /* Rotate the plus on hover */
+        }
 
-      /* Templates Section */
-      .templates-section {
-        position: right;
-        display: none; /* Initially hidden */
-        margin-top: 50px;
-        margin-left: 20px; /* Spacing between text box and templates */
-        flex-direction: column;
-        align-items: flex-start;
-      }
+        .courses-title {
+            font-size: 1.6rem; /* Increased font size */
+            margin-bottom: 15px; /* More space below title */
+            font-weight: bold; /* Make title bold */
+            color: #0096C7; /* Added color to the title */
+        }
 
-      .template-card {
-        background-color: #2c2c2c;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 10px;
-        width: 150px; /* Width of each card */
-        color: #f8f9fa;
-        text-align: center;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-      }
+        .course-item {
+            padding: 12px; /* Increased padding for better spacing */
+            border-bottom: 1px solid #555555;
+            display: flex;
+            justify-content: space-between; /* Space out items */
+            align-items: center; /* Center items vertically */
+            transition: background-color 0.3s ease; /* Transition for hover effect */
+            cursor: pointer; /* Change cursor to pointer */
+            border-radius: 4px; /* Added border radius for item */
+        }
 
-      .template-card:hover {
-        background-color: #444444; /* Change background color on hover */
-      }
+        .course-item:last-child {
+            border-bottom: none;
+        }
 
-      .template-title {
-        font-weight: bold;
-        margin-top: 10px;
-      }
+        /* Hover effect for course items */
+        .course-item:hover {
+            background-color: #656464; /* Change background color on hover */
+            transform: scale(1.02); /* Slight scaling effect on hover */
+        }
 
-      .container {
-        display: flex;
-        gap: 20px; /* This controls the space between the text box and template section */
-      }
+        /* Selected course item */
+        .course-item.selected {
+            background-color: #444444; /* Change to a different color when selected */
+            color: #FFFFFF; /* Change text color for selected item */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow effect for selected item */
+        }
 
-      .template-section {
-        margin-right: 20px; /* Space between template section and save button */
-      }
+        .bottom-section {
+            background-color: #333333;
+            padding: 15px;
+            border-radius: 5px;
+            height: 300px;
+        }
+
+        .streak-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            color: #F8F9FA;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-content button {
+            padding: 10px 25px;
+            background-color: #333333;
+            border: none;
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero-content button:hover {
+            background-color: #555555;
+        }
+
+        footer {
+            padding: 30px 50px;
+            background-color: #1A1A1A;
+            text-align: center;
+            color: #CCCCCC;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #90E0EF;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #00B4D8;
+        }
+
+        .wheel-and-hamster {
+            --dur: 1s;
+            position: absolute;
+            right: 25%; /* Align to the right */
+            top: 50%; /* Vertically center */
+            transform: translateY(-50%); /* Adjust position to perfectly center vertically */
+            width: 12em; /* Increase size from 12em to 18em */
+            height: 12em; /* Increase size from 12em to 18em */
+            font-size: 24px; /* Increase font size to match new scale */
+        }
+
+        .wheel,
+        .hamster,
+        .hamster div,
+        .spoke {
+            position: absolute;
+        }
+
+        .wheel,
+        .spoke {
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .wheel {
+            background: radial-gradient(100% 100% at center, hsla(0, 0%, 60%, 0) 47.8%, hsl(0, 0%, 60%) 48%);
+            z-index: 2;
+        }
+
+        .hamster {
+            animation: hamster var(--dur) ease-in-out infinite;
+            top: 50%;
+            left: calc(50% - 3.5em);
+            width: 7em;
+            height: 3.75em;
+            transform: rotate(4deg) translate(-0.8em, 1.85em);
+            transform-origin: 50% 0;
+            z-index: 1;
+        }
+
+        .hamster__head {
+            animation: hamsterHead var(--dur) ease-in-out infinite;
+            background: hsl(30, 90%, 55%);
+            border-radius: 70% 30% 0 100% / 40% 25% 25% 60%;
+            box-shadow: 0 -0.25em 0 hsl(30, 90%, 80%) inset,
+                0.75em -1.55em 0 hsl(30, 90%, 90%) inset;
+            top: 0;
+            left: -2em;
+            width: 2.75em;
+            height: 2.5em;
+            transform-origin: 100% 50%;
+        }
+
+        .hamster__ear {
+            animation: hamsterEar var(--dur) ease-in-out infinite;
+            background: hsl(0, 90%, 85%);
+            border-radius: 50%;
+            box-shadow: -0.25em 0 hsl(30, 90%, 55%) inset;
+            top: -0.25em;
+            right: -0.25em;
+            width: 0.75em;
+            height: 0.75em;
+            transform-origin: 50% 75%;
+        }
+
+        .hamster__eye {
+            animation: hamsterEye var(--dur) linear infinite;
+            background-color: hsl(0, 0%, 0%);
+            border-radius: 50%;
+            top: 0.375em;
+            left: 1.25em;
+            width: 0.5em;
+            height: 0.5em;
+        }
+
+        .hamster__nose {
+            background: hsl(0, 90%, 75%);
+            border-radius: 35% 65% 85% 15% / 70% 50% 50% 30%;
+            top: 0.75em;
+            left: 0;
+            width: 0.2em;
+            height: 0.25em;
+        }
+
+        .hamster__body {
+            animation: hamsterBody var(--dur) ease-in-out infinite;
+            background: hsl(30, 90%, 90%);
+            border-radius: 50% 30% 50% 30% / 15% 60% 40% 40%;
+            box-shadow: 0.1em 0.75em 0 hsl(30, 90%, 55%) inset,
+                0.15em -0.5em 0 hsl(30, 90%, 80%) inset;
+            top: 0.25em;
+            left: 2em;
+            width: 4.5em;
+            height: 3em;
+            transform-origin: 17% 50%;
+            transform-style: preserve-3d;
+        }
+
+        .hamster__limb--fr,
+        .hamster__limb--fl {
+            clip-path: polygon(0 0, 100% 0, 70% 80%, 60% 100%, 0% 100%, 40% 80%);
+            top: 2em;
+            left: 0.5em;
+            width: 1em;
+            height: 1.5em;
+            transform-origin: 50% 0;
+        }
+
+        .hamster__limb--fr {
+            animation: hamsterFRLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30, 90%, 80%) 80%, hsl(0, 90%, 75%) 80%);
+            transform: rotate(15deg) translateZ(-1px);
+        }
+
+        .hamster__limb--fl {
+            animation: hamsterFLLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30, 90%, 90%) 80%, hsl(0, 90%, 85%) 80%);
+            transform: rotate(15deg);
+        }
+
+        .hamster__limb--br,
+        .hamster__limb--bl {
+            border-radius: 0.75em 0.75em 0 0;
+            clip-path: polygon(0 0, 100% 0, 100% 30%, 70% 90%, 70% 100%, 30% 100%, 40% 90%, 0% 30%);
+            top: 1em;
+            left: 2.8em;
+            width: 1.5em;
+            height: 2.5em;
+            transform-origin: 50% 30%;
+        }
+
+        .hamster__limb--br {
+            animation: hamsterBRLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30, 90%, 80%) 90%, hsl(0, 90%, 75%) 90%);
+            transform: rotate(-25deg) translateZ(-1px);
+        }
+
+        .hamster__limb--bl {
+            animation: hamsterBLLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30, 90%, 90%) 90%, hsl(0, 90%, 85%) 90%);
+            transform: rotate(-25deg);
+        }
+
+        .hamster__tail {
+            animation: hamsterTail var(--dur) linear infinite;
+            background: hsl(0, 90%, 85%);
+            border-radius: 0.25em 50% 50% 0.25em;
+            box-shadow: 0 -0.2em 0 hsl(0, 90%, 75%) inset;
+            top: 1.5em;
+            right: -0.5em;
+            width: 1em;
+            height: 0.5em;
+            transform: rotate(30deg) translateZ(-1px);
+            transform-origin: 0.25em 0.25em;
+        }
+
+        .spoke {
+            animation: spoke var(--dur) linear infinite;
+            background: radial-gradient(100% 100% at center, hsl(0, 0%, 60%) 4.8%, hsla(0, 0%, 60%, 0) 5%),
+                linear-gradient(hsla(0, 0%, 55%, 0) 46.9%, hsl(0, 0%, 65%) 47% 52.9%, hsla(0, 0%, 65%, 0) 53%) 50% 50% / 99% 99% no-repeat;
+        }
+
+        /* Animations */
+        @keyframes hamster {
+            from,
+            to {
+                transform: rotate(4deg) translate(-0.8em, 1.85em);
+            }
+
+            50% {
+                transform: rotate(0) translate(-0.8em, 1.85em);
+            }
+        }
+
+        @keyframes hamsterHead {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(0);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(8deg);
+            }
+        }
+
+        @keyframes hamsterEye {
+            from,
+            90%,
+            to {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0);
+            }
+        }
+
+        @keyframes hamsterEar {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(0);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(12deg);
+            }
+        }
+
+        @keyframes hamsterBody {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(0);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(-2deg);
+            }
+        }
+
+        @keyframes hamsterFRLimb {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(50deg) translateZ(-1px);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(-30deg) translateZ(-1px);
+            }
+        }
+
+        @keyframes hamsterFLLimb {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(-30deg);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(50deg);
+            }
+        }
+
+        @keyframes hamsterBRLimb {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(-60deg) translateZ(-1px);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(20deg) translateZ(-1px);
+            }
+        }
+
+        @keyframes hamsterBLLimb {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(20deg);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(-60deg);
+            }
+        }
+
+        @keyframes hamsterTail {
+            from,
+            25%,
+            50%,
+            75%,
+            to {
+                transform: rotate(30deg) translateZ(-1px);
+            }
+
+            12.5%,
+            37.5%,
+            62.5%,
+            87.5% {
+                transform: rotate(10deg) translateZ(-1px);
+            }
+        }
+
+        @keyframes spoke {
+            from {
+                transform: rotate(0);
+            }
+
+            to {
+                transform: rotate(-1turn);
+            }
+        }
+
+        /* Text box style */
+        .text-box {
+            display: none; /* Hidden by default */
+            width: 700px; /* Width can be adjusted */
+            height: 450px;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: rgba(51, 51, 51, 0.5); /* Semi-transparent background (50% opacity) */
+            color: #d0cece;
+            backdrop-filter: blur(200px); /* Blur effect */
+            border-radius: 15px; /* Rounded corners */
+            resize: none; /* Prevent resizing */
+        }
+
+        /* Save Button Style */
+        button {
+            font-family: inherit;
+            font-size: 20px;
+            background: #212121;
+            color: white;
+            fill: rgb(155, 153, 153);
+            padding: 0.7em 1em;
+            padding-left: 0.9em;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            font-weight: 1000;
+            margin-top: 15px; /* Space above the button */
+            display: none; /* Initially hidden */
+        }
+
+        button span {
+            display: block;
+            margin-left: 0.3em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button svg {
+            display: block;
+            transform-origin: center center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #212121;
+        }
+
+        button:hover .svg-wrapper {
+            transform: scale(1.25);
+            transition: 0.5s linear;
+        }
+
+        button:hover svg {
+            transform: translateX(1.2em) scale(1.1);
+            fill: #fff;
+        }
+
+        button:hover span {
+            opacity: 0;
+            transition: 0.5s linear;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Templates Section */
+        .templates-section {
+            position: right;
+            display: none; /* Initially hidden */
+            margin-top: 50px;
+            margin-left: 20px; /* Spacing between text box and templates */
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .template-card {
+          
+            background-color: #2C2C2C;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            width: 150px; /* Width of each card */
+            color: #F8F9FA;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .template-card:hover {
+            background-color: #444444; /* Change background color on hover */
+        }
+
+        .template-title {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .container {
+    display: flex;
+    gap: 20px; /* This controls the space between the text box and template section */
+}
+
+
+.template-section {
+    margin-right: 20px; /* Space between template section and save button */
+}
+    /* Container for Save and Mic buttons */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust space between the buttons */
+}
+
+/* Save button styles */
+.save-button {
+    padding: 10px 20px;
+    background-color: #212121;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.save-button:hover {
+    background-color: #444;
+}
+
+.save-button .svg-wrapper {
+    display: block;
+    margin-right: 8px;
+}
+
+/* Mic button styles */
+.mic-button {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(60,64,67);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mic-on, .mic-off {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.mic-on {
+    z-index: 4;
+}
+
+.mic-off {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    opacity: 0;
+}
+
+.mic-button:hover {
+    background-color: rgba(60, 64, 67, 0.8);
+}
+
+#mic-checkbox {
+    display: none;
+}
+
+#mic-checkbox:checked + .mic-button {
+    background-color: red;
+}
+
+#mic-checkbox:checked + .mic-button .mic-off {
+    opacity: 1;
+}
+
+.mic-button:active {
+    transform: scale(1.2);
+}
+
+.chatbot-container {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.chatbot-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #00B4D8; /* Use your preferred color */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.chat-popup {
+    display: none;
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    background-color: white;
+    width: 300px;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+
     </style>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const courseItems = document.querySelectorAll(".course-item");
-
-        courseItems.forEach((item) => {
-          item.addEventListener("click", () => {
-            courseItems.forEach((i) => i.classList.remove("selected"));
-            item.classList.add("selected");
-          });
-        });
-
-        // ADD FILE button event listener
         const addFileButton = document.querySelector(".settings-button");
         const hamster = document.querySelector(".wheel-and-hamster");
         const textBox = document.querySelector(".text-box");
@@ -757,148 +821,207 @@
           saveButton.style.display = "flex"; // Show the save button
           templatesSection.style.display = "flex"; // Show templates section
         });
+
+        saveButton.addEventListener("click", async () => {
+          const textContent = textBox.value; // Get value from the text box
+          
+          // Send POST request to save text
+          const response = await fetch('http://127.0.0.1:5000/save', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: textContent }) // Send text as JSON
+          });
+
+          const result = await response.json();
+          console.log(result.message); // Log success message to console
+          alert(result.message); // Alert user of success
+          textBox.value = ''; // Clear the text box after saving
+          textBox.style.display = 'none'; // Optionally hide the text box again
+          saveButton.style.display = 'none'; // Hide save button again if needed
+        });
       });
     </script>
-  </head>
 
-  <body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const addFileButton = document.querySelector(".settings-button");
+      const hamster = document.querySelector(".wheel-and-hamster");
+      const textBox = document.querySelector(".text-box");
+      const saveButton = document.querySelector("button");
+      const templatesSection = document.querySelector(".templates-section");
+      const chatbotIcon = document.getElementById("chatbotIcon");
+      const chatPopup = document.getElementById("chatPopup"); // Select the chat popup
+  
+      // Initially hide chatbot icon with visibility, to maintain alignment
+      chatbotIcon.style.visibility = "hidden";
+      chatPopup.style.display = "none"; // Hide chat popup initially
+  
+      // Add click event to ADD FILE button
+      addFileButton.addEventListener("click", () => {
+        hamster.style.display = "none";
+        textBox.style.display = "block";
+        saveButton.style.display = "flex";
+        templatesSection.style.display = "flex";
+  
+        // Show chatbot icon after clicking ADD FILE by making it visible
+        chatbotIcon.style.visibility = "visible";
+      });
+  
+      // Chatbot icon click to toggle chat popup
+      chatbotIcon.addEventListener("click", () => {
+        if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+          chatPopup.style.display = "block";  // Show the chat popup
+        } else {
+          chatPopup.style.display = "none";  // Hide the chat popup
+        }
+      });
+  
+      // Select course items and add selection functionality
+      const courseItems = document.querySelectorAll(".course-item");
+      courseItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          courseItems.forEach((course) => course.classList.remove("selected"));
+          item.classList.add("selected");
+        });
+      });
+    });
+  </script>
+  
+  
+  
+  
+
+</head>
+
+<body>
+
     <!-- Header Section -->
     <header>
-      <div class="logo">Note IT</div>
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Streak</a></li>
-          <li><a href="#">To-do</a></li>
-          <li><a href="#">Help</a></li>
-          <li><a href="#">Profile</a></li>
-        </ul>
-      </nav>
+        <div class="logo">Note IT</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Streak</a></li>
+                <li><a href="#">To-do</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-      <div class="hero-left">
-        <!-- Top section (Settings button) -->
-        <div class="top-section">
-          <!-- Settings button with text and icon -->
-          <div class="settings-button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="svg-icon"
-              viewBox="0 0 24 24"
-              title="Settings"
-            >
-              <path
-                d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-              ></path>
-              <path class="plus" d="M8 12H16"></path>
-              <path class="plus" d="M12 8V16"></path>
-            </svg>
-            <span class="settings-text">ADD FILE</span>
-          </div>
-        </div>
+        <div class="hero-left">
+            <!-- Top section (Settings button) -->
+            <div class="top-section">
+                <!-- Settings button with text and icon -->
+                <div class="settings-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" viewBox="0 0 24 24" title="Settings">
+                        <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"></path>
+                        <path class="plus" d="M8 12H16"></path>
+                        <path class="plus" d="M12 8V16"></path>
+                    </svg>
+                    <span class="settings-text">ADD FILE</span>
+                </div>
+            </div>
 
-        <!-- Middle Section (Courses) -->
-        <div class="middle-section">
-          <div class="courses-title">My Courses</div>
-          <div class="course-item">Mathematics</div>
-          <div class="course-item">Physics</div>
-          <div class="course-item">History</div>
-          <div class="course-item">Literature</div>
-          <div class="course-item">Computer Science</div>
-          <div class="course-item">Art</div>
-          <div class="course-item">Physical Education</div>
-          <div class="course-item">Language</div>
-          <div class="course-item">Robotics</div>
-          <div class="course-item">Mechanics</div>
-          <div class="course-item">Biology</div>
-          <div class="course-item">Chemistry</div>
-          <div class="settings-button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="svg-icon"
-              viewBox="0 0 24 24"
-              title="Settings"
-            >
-              <path
-                d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-              ></path>
-              <path class="plus" d="M8 12H16"></path>
-              <path class="plus" d="M12 8V16"></path>
-            </svg>
-            <span class="settings-text">ADD COURSES</span>
-          </div>
-        </div>
-
-        <!-- Bottom Section -->
-        <div class="bottom-section">
-          <div class="streak-title">Current Streak: 5 Days</div>
-        </div>
-      </div>
-
-      <div class="hero-right">
-        <div class="wheel-and-hamster">
-          <div class="wheel">
-            <div class="spoke"></div>
-          </div>
-          <div class="hamster">
-            <div class="hamster__body">
-              <div class="hamster__head">
-                <div class="hamster__ear"></div>
-                <div class="hamster__eye"></div>
-                <div class="hamster__nose"></div>
+            <!-- Middle Section (Courses) -->
+            <div class="middle-section">
+                <div class="courses-title">My Courses</div>
+                <div class="course-item">Mathematics</div>
+                <div class="course-item">Physics</div>
+                <div class="course-item">History</div>
+                <div class="course-item">Literature</div>
+                <div class="course-item">Computer Science</div>
+                <div class="course-item">Art</div>
+                <div class="course-item">Physical Education</div>
+                <div class="course-item">Language</div>
+                <div class="course-item">Robotics</div>
+                <div class="course-item">Mechanics</div>
+                <div class="course-item">Biology</div>
+                <div class="course-item">Chemistry</div>
+                <div class="settings-button">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" viewBox="0 0 24 24" title="Settings">
+                      <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"></path>
+                      <path class="plus" d="M8 12H16"></path>
+                      <path class="plus" d="M12 8V16"></path>
+                  </svg>
+                  <span class="settings-text">ADD FILE</span>
               </div>
-              <div class="hamster_limb hamster_limb--fr"></div>
-              <div class="hamster_limb hamster_limb--fl"></div>
-              <div class="hamster_limb hamster_limb--br"></div>
-              <div class="hamster_limb hamster_limb--bl"></div>
-              <div class="hamster__tail"></div>
             </div>
-          </div>
+
+            <!-- Bottom Section -->
+            <div class="bottom-section">
+                <div class="streak-title">Current Streak: 5 Days</div>
+            </div>
+
         </div>
 
-        <!-- Templates Section -->
+        <div class="hero-right">
+            <div class="wheel-and-hamster">
+                <div class="wheel">
+                    <div class="spoke"></div>
+                </div>
+                <div class="hamster">
+                    <div class="hamster__body">
+                        <div class="hamster__head">
+                            <div class="hamster__ear"></div>
+                            <div class="hamster__eye"></div>
+                            <div class="hamster__nose"></div>
+                        </div>
+                        <div class="hamster_limb hamster_limb--fr"></div>
+                        <div class="hamster_limb hamster_limb--fl"></div>
+                        <div class="hamster_limb hamster_limb--br"></div>
+                        <div class="hamster_limb hamster_limb--bl"></div>
+                        <div class="hamster__tail"></div>
+                    </div>
+                </div>
+              </div>
 
-        <div class="container">
-          <textarea
-            class="text-box"
-            placeholder="Enter your text..."
-          ></textarea>
-
-          <div class="templates-section">
-            <div class="template-card">Cornell</div>
-            <div class="template-card">Mind Map</div>
-            <div class="template-card">Lazy Man</div>
-            <div class="template-card">Outline</div>
-            <div class="template-card">Charting</div>
+            <!-- Templates Section -->
+            
+            <div class="container">
+              <textarea class="text-box" placeholder="Enter your text..."></textarea>
+          
+              <div class="templates-section">
+                  <a href="./Cornell.html"><div class="template-card">Cornell</div></button></a>
+                  <div class="template-card">Mind Map</div>
+                  <div class="template-card">Lazy Man</div>
+                  <div class="template-card">Outline</div>
+                  <div class="template-card">Charting</div>
+              </div>
           </div>
-        </div>
 
-        <button>
-          <div class="svg-wrapper-1">
-            <div class="svg-wrapper">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="30"
-                height="30"
-                class="icon"
-              >
-                <path
-                  d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"
-                ></path>
-              </svg>
+          <button>
+            <div class="svg-wrapper-1">
+                <div class="svg-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" class="icon">
+                        <path d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"></path>
+                    </svg>
+                </div>
             </div>
-          </div>
-          <span>Save</span>
+            <span>Save</span>
         </button>
-      </div>
+
+        <div class="chatbot-container">
+            <div class="chatbot-icon" id="chatbotIcon">
+                💬
+            </div>
+            <div class="chat-popup" id="chatPopup"></div>
+        </div>
+        
+        
+        
+          
+        </div>
     </section>
 
     <!-- Footer Section -->
     <footer>
-      <p>&copy; 2024 NoteIT. All Rights Reserved.</p>
+        <p>&copy; 2024 NoteIT. All Rights Reserved.</p>
     </footer>
-  </body>
+
+</body>
 </html>
