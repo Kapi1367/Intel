@@ -394,5 +394,6 @@ Thank you for choosing Note IT as your note-taking companion! We are excited to 
 
 ![image](https://github.com/user-attachments/assets/39af4e7c-09d4-4f96-8afd-352af1007218)
 
+![image](https://github.com/user-attachments/assets/e65830f4-61b1-4ec6-ba90-3847b5b45b74)
 
 
